@@ -1139,11 +1139,13 @@ ck_rhs_fas(struct ck_rhs *hs,
 	const void *object;
 	const void *insert;
 	unsigned long n_probes;
-	struct ck_rhs_map *map = hs->map;
+	struct ck_rhs_map *map;
 	struct ck_rhs_entry_desc *desc, *desc2;
 
 	*previous = NULL;
 restart:
+	map = hs->map;
+
 	slot = map->probe_func(hs, map, &n_probes, &first, h, key, &object,
 	    ck_rhs_map_bound_get(map, h), CK_RHS_PROBE);
 

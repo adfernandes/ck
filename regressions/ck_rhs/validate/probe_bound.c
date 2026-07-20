@@ -143,6 +143,7 @@ validate_no_in_rh(ck_rhs_t *rhs, unsigned long operation)
 }
 
 enum grow_operation {
+	GROW_FAS,
 	GROW_SET,
 	GROW_APPLY,
 	GROW_OPERATIONS
@@ -167,7 +168,7 @@ apply_replace(void *previous, void *closure)
 static void
 validate_successful_grow(enum grow_operation operation)
 {
-	static const char *names[] = { "set", "apply" };
+	static const char *names[] = { "fas", "set", "apply" };
 	struct key test[] = {
 		{ 0, 0 },
 		{ 1, 1 },
@@ -202,6 +203,9 @@ validate_successful_grow(enum grow_operation operation)
 	capacity = rhs.map->capacity;
 	rhs.map->probe_limit = 1;
 	switch (operation) {
+	case GROW_FAS:
+		result = ck_rhs_fas(&rhs, test[3].hash, &test[3], &previous);
+		break;
 	case GROW_SET:
 		result = ck_rhs_set(&rhs, test[3].hash, &test[3], &previous);
 		break;
